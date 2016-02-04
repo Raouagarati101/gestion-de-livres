@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pretty="http://ocpsoft.com/prettyfaces">
+	
+	<h:body>
+		<ui:composition template="/web-pages/template/layout-template.xhtml">
+			<f:metadata>
+				<f:viewParam name="bookId" value="#{bookController.bookId}" />
+				<f:event type="preRenderView" listener="#{bookController.initViewAction}" />
+			</f:metadata>
+				
+			<ui:define name="title">#{bookController.book.title}</ui:define>
+			
+			<ui:define name="description">
+				<meta name="description" content="#{msg['book.view.description']} #{bookController.book.title}" />
+			</ui:define>
+			
+			<ui:define name="article-title">#{bookController.book.title}</ui:define>
+			
+			<ui:define name="body">
+				<div class="section-block section-informations">
+					<p>#{msg['book.fields.author']} : 
+						<pretty:link mappingId="author-view">
+							<f:param value="#{bookController.book.author.id}"/>
+							<h:outputText value="#{bookController.book.author.getFullName()}"/>
+						</pretty:link>
+					</p>
+					<p>#{msg['book.fields.publisher']} : #{bookController.book.publisher}</p>
+					<p>#{msg['book.fields.pages-number']} : #{bookController.book.pagesNumber}</p>
+					<p>
+						#{msg['book.fields.genres']} : 
+						<ui:repeat value="#{bookController.book.bookGenres}" var="bookGenre" varStatus="status">
+							<pretty:link mappingId="bookgenre-view">
+								<f:param value="#{bookGenre.id}"/>
+								<h:outputText value="#{bookGenre.description}"/>
+							</pretty:link>
+							
+							<h:outputText value=", " rendered="#{!status.last}"/>
+						</ui:repeat>
+						<h:panelGroup rendered="#{bookController.book.bookGenres.size() == 0}">
+							<h:outputText value="#{msg['book.view.no-genre']}" />
+						</h:panelGroup>
+					</p>
+				</div>
+				
+				<div class="section-block">
+					<p><strong>#{msg['book.view.book-summary']}</strong></p>
+					<h:panelGroup rendered="#{bookController.book.summary ne ''}">
+						<p>#{bookController.book.summary}</p>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{bookController.book.summary eq ''}">
+						<p>-</p>
+					</h:panelGroup>
+				</div>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+	
+</html>

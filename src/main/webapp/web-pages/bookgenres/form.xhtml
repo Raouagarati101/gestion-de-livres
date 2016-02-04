@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pretty="http://ocpsoft.com/prettyfaces">
+	
+	<h:body>
+		<ui:composition>
+			<div class="form-group">
+				<h:outputLabel for="description" value="#{msg['bookgenre.fields.description']}" />
+				<h:message for="description" errorClass="error-message" />
+				<h:inputText id="description" value="#{bookGenreController.formBookGenre.description}" styleClass="form-control" required="true" requiredMessage="#{msg['error.form.required-message']}" />
+			</div>
+		</ui:composition>
+	</h:body>
+	
+</html>

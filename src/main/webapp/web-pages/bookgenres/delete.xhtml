@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pretty="http://ocpsoft.com/prettyfaces">
+	
+	<h:body>
+		<ui:composition template="/web-pages/template/layout-template.xhtml">
+			<f:metadata>
+				<f:viewParam name="bookgenreId" value="#{bookGenreController.bookGenreId}" />
+				<f:event type="preRenderView" listener="#{bookGenreController.initDeleteAction}" />
+			</f:metadata>
+			
+			<ui:define name="article-title">#{msg['bookgenre.delete.article-title']} #{bookGenreController.bookGenre.description}</ui:define>
+			
+			<ui:define name="body">
+				<h:form>
+					<p>#{msg['bookgenre.delete.delete-message']}</p>
+					<h:form>
+						<pretty:link mappingId="bookgenre-list" styleClass="btn btn-default">
+							<i class="glyphicon glyphicon-chevron-left"></i>
+							<h:outputText value="#{msg['bookgenre.delete.back-button']}"/>
+						</pretty:link>
+						<h:outputText value=" " />
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<h:commandButton type="submit" value="#{msg['bookgenre.delete.submit-button']}" styleClass="btn btn-danger" onclick="if (! confirm('Voulez-vous vraiment supprimer ce genre ?')) return false;" action="#{bookGenreController.deleteBookGenre}" />
+					</h:form>
+			 	</h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+	
+</html>

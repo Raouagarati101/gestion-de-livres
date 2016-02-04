@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pretty="http://ocpsoft.com/prettyfaces">
+	
+	<h:body>
+		<ui:composition>
+			<div class="form-group">
+				<h:outputLabel for="title" value="#{msg['book.fields.title']}" />
+				<h:message for="title" errorClass="error-message" />
+				<h:inputText id="title" value="#{bookController.formBook.title}" styleClass="form-control" required="true" requiredMessage="#{msg['error.form.required-message']}" />
+			</div>
+			<div class="form-group">
+				<h:outputLabel for="author" value="#{msg['book.fields.author']}" />
+				<h:message for="author" errorClass="error-message" />
+				<h:selectOneMenu id="author" value="#{bookController.formBook.author}" styleClass="form-control" converter="#{authorConverter}" requiredMessage="#{msg['error.form.required-message']}">
+					<f:selectItems value="#{bookController.getAllAuthors()}" var="a"
+						itemLabel="#{a.getFullName()}" />
+					<f:validateRequired />
+				</h:selectOneMenu>
+			</div>
+			<div class="form-group">
+				<h:outputLabel for="publisher" value="#{msg['book.fields.publisher']}" />
+				<h:message for="publisher" errorClass="error-message" />
+				<h:inputText id="publisher" value="#{bookController.formBook.publisher}" styleClass="form-control" />
+			</div>
+			<div class="form-group">
+				<h:outputLabel for="bookGenres" value="#{msg['book.fields.genres']}" />
+				<h:message for="bookGenres" errorClass="error-message" />
+				<h:selectManyListbox id="bookGenres" value="#{bookController.formBook.bookGenres}" styleClass="form-control"
+					converter="#{bookGenreConverter}" collectionType="java.util.ArrayList">
+					<f:selectItems value="#{bookController.getAllBookGenres()}" var="g"
+						itemLabel="#{g.description}" />
+				</h:selectManyListbox>
+			</div>
+			<div class="form-group">
+				<h:outputLabel for="pageNumber" value="#{msg['book.fields.pages-number']}" />
+				<h:message for="pageNumber" errorClass="error-message"  />
+				<h:inputText id="pageNumber" value="#{bookController.formBook.pagesNumber}" styleClass="form-control" converterMessage="#{msg['error.form.number-message']}">
+					<f:convertNumber integerOnly="true" />
+				</h:inputText>
+			</div>
+			<div class="form-group">
+				<h:outputLabel for="summary" value="#{msg['book.fields.summary']}" />
+				<h:message for="summary" errorClass="error-message" />
+				<h:inputTextarea id="summary" value="#{bookController.formBook.summary}" styleClass="form-control" rows="7" />
+			</div>
+		</ui:composition>
+	</h:body>
+	
+</html>

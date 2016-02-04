@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Hibernate session factory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    	<property name="dataSource">
+    		<ref bean="mySQLDataSource"/>
+    	</property>
+    	<property name="hibernateProperties">
+    		<props>
+    		    <!-- Props de base -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+  				<prop key="show_sql">true</prop>
+				
+				<!-- Props pour éviter que la connexion lâche en prod -->
+<!-- 				<prop key="hibernate.c3p0.acquire_increment">1</prop> -->
+<!-- 				<prop key="hibernate.c3p0.idle_test_period">100</prop> -->
+<!-- 				<prop key="hibernate.c3p0.max_size">100</prop> -->
+<!-- 				<prop key="hibernate.c3p0.min_size">10</prop> -->
+<!-- 				<prop key="hibernate.c3p0.timeout">0</prop> -->
+<!-- 				<prop key="hibernate.c3p0.max_statements">0</prop> -->
+<!-- 				<prop key="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</prop> -->
+    		</props>
+    	</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>ch.blutch.library.model.entity.Author</value>
+				<value>ch.blutch.library.model.entity.Book</value>
+				<value>ch.blutch.library.model.entity.BookGenre</value>
+				<value>ch.blutch.library.model.entity.User</value>
+				<value>ch.blutch.library.model.entity.UserRole</value>
+			</list>
+		</property>
+    </bean>
+    
+    <!-- HibernateTemplate -->
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+</beans>

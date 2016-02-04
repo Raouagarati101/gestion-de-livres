@@ -1,0 +1,107 @@
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+
+	<!-- Login -->
+	<url-mapping id="login">
+		<pattern value="/login"/>
+		<view-id value="/web-pages/login/login.xhtml"/>
+	</url-mapping>
+	
+	<!-- Exception -->
+	<url-mapping id="exception">
+		<pattern value="/exception"/>
+		<view-id value="/web-pages/exceptions/exceptions.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="404">
+		<pattern value="/404"/>
+		<view-id value="/web-pages/exceptions/404.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="500">
+		<pattern value="/500"/>
+		<view-id value="/web-pages/exceptions/500.xhtml"/>
+	</url-mapping>
+	
+	<!-- Books -->
+	<url-mapping id="index">
+		<pattern value="/"/>
+		<view-id value="/web-pages/books/index.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="book-view">
+		<pattern value="/book/view/#{bookId : bookController.bookId}"/>
+		<view-id value="/web-pages/books/view.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="book-add">
+		<pattern value="/book/add"/>
+		<view-id value="/web-pages/books/add.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="book-edit">
+		<pattern value="/book/edit/#{bookId : bookController.bookId}"/>
+		<view-id value="/web-pages/books/edit.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="book-delete">
+		<pattern value="/book/delete/#{bookId : bookController.bookId}"/>
+		<view-id value="/web-pages/books/delete.xhtml"/>
+	</url-mapping>
+	
+	<!-- Authors -->
+	<url-mapping id="author-list">
+		<pattern value="/author/list"/>
+		<view-id value="/web-pages/authors/index.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="author-view">
+		<pattern value="/author/view/#{authorId : authorController.authorId}"/>
+		<view-id value="/web-pages/authors/view.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="author-add">
+		<pattern value="/author/add"/>
+		<view-id value="/web-pages/authors/add.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="author-edit">
+		<pattern value="/author/edit/#{authorId : authorController.authorId}"/>
+		<view-id value="/web-pages/authors/edit.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="author-delete">
+		<pattern value="/author/delete/#{authorId : authorController.authorId}"/>
+		<view-id value="/web-pages/authors/delete.xhtml"/>
+	</url-mapping>
+	
+	<!-- BookGenres -->
+	<url-mapping id="bookgenre-list">
+		<pattern value="/genre/list"/>
+		<view-id value="/web-pages/bookgenres/index.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="bookgenre-view">
+		<pattern value="/genre/view/#{bookgenreId : bookGenreController.bookGenreId}"/>
+		<view-id value="/web-pages/bookgenres/view.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="bookgenre-add">
+		<pattern value="/genre/add"/>
+		<view-id value="/web-pages/bookgenres/add.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="bookgenre-edit">
+		<pattern value="/genre/edit/#{bookgenreId : bookGenreController.bookGenreId}"/>
+		<view-id value="/web-pages/bookgenres/edit.xhtml"/>
+	</url-mapping>
+	
+	<url-mapping id="bookgenre-delete">
+		<pattern value="/genre/delete/#{bookgenreId : bookGenreController.bookGenreId}"/>
+		<view-id value="/web-pages/bookgenres/delete.xhtml"/>
+	</url-mapping>
+	
+
+</pretty-config>

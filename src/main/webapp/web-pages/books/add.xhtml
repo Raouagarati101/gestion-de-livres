@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pretty="http://ocpsoft.com/prettyfaces">
+	
+	<h:body>
+		<ui:composition template="/web-pages/template/layout-template.xhtml">
+			<f:metadata>
+				<f:event type="preRenderView" listener="#{bookController.initAddAction}" />
+			</f:metadata>
+			
+			<ui:define name="article-title">#{msg['book.add.article-title']}</ui:define>
+			
+			<ui:define name="body">
+				<h:form>
+					<ui:include src="/web-pages/books/form.xhtml" />
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					
+					<p>
+						<pretty:link mappingId="index" styleClass="btn btn-default">
+							<i class="glyphicon glyphicon-chevron-left"></i>
+							<h:outputText value="#{msg['book.add.back-button']}"/>
+						</pretty:link>
+						<h:outputText value=" " />
+						<h:commandButton value="#{msg['book.add.submit-button']}" action="#{bookController.addBook}" styleClass="btn btn-success" type="submit" />
+				 	</p>
+			 	</h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+	
+</html>

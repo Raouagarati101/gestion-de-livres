@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pretty="http://ocpsoft.com/prettyfaces">
+	
+	<h:body>
+		<ui:composition template="/web-pages/template/layout-template.xhtml">
+			<f:metadata>
+				<f:viewParam name="authorId" value="#{authorController.authorId}" />
+				<f:event type="preRenderView" listener="#{authorController.initViewAction}" />
+			</f:metadata>
+				
+			<ui:define name="title">#{authorController.author.getFullName()}</ui:define>
+			
+			<ui:define name="description">
+				<meta name="description" content="#{msg['author.view.description']} #{authorController.author.getFullName()}" />
+			</ui:define>
+			
+			<ui:define name="article-title">#{authorController.author.getFullName()}</ui:define>
+			
+			<ui:define name="body">
+				<div class="section-block section-informations">
+					<p>
+						#{msg['author.fields.birthdate']} : 
+						<h:outputText value="#{authorController.author.birthdate}">
+							<f:convertDateTime locale="fr_CH" dateStyle="long" type="date" />
+						</h:outputText>
+					</p>
+				</div>
+				
+				<div class="section-block">
+					<p><strong>#{msg['author.view.author-biography']}</strong></p>
+					<p>#{authorController.author.biography}</p>
+					<h:panelGroup rendered="#{authorController.author.biography ne ''}">
+						<p>#{authorController.author.biography}</p>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{authorController.author.biography eq ''}">
+						<p>-</p>
+					</h:panelGroup>
+				</div>
+				
+				<div class="section-block">
+					<p><strong>#{msg['author.view.author-books']}</strong></p>
+					<h:panelGroup rendered="#{authorController.author.books.size() > 0}">
+						<h:dataTable value="#{authorController.author.books}" var="book" styleClass="table table-striped">
+							<ui:include src="/web-pages/books/books-table.xhtml" />
+						</h:dataTable>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{authorController.author.books.size() == 0}">
+						<h:outputText value="#{msg['book.table.no-book']}" />
+					</h:panelGroup>
+				</div>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+	
+</html>

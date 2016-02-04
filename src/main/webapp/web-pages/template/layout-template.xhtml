@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pretty="http://ocpsoft.com/prettyfaces"
+	lang="fr"
+	manifest="library.appcache">
+	
+	<f:view locale="#{languageController.locale}">	
+		<h:head>
+			<meta charset="UTF-8" />
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<meta name="viewport" content="width=device-width, initial-scale=1" />
+			<title>#{msg['template.site-title']} <ui:insert name="title"></ui:insert></title>
+			<ui:insert name="description"><meta name="description" content="msg['template.main-menu-title']" /></ui:insert>
+			<link rel="icon" type="image/png" href="#{request.contextPath}/images/favicon.png" />
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+			<h:outputStylesheet library="css" name="main.css" />
+			<h:outputStylesheet library="css" name="library.css" />
+		</h:head>
+		<h:body>
+			<header class="jumbotron">
+				<div class="container">
+					<div class="pull-right">
+						<div>
+							<h:panelGroup rendered="#{languageController.locale ne 'fr'}">
+								<h:form>
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+									<h:commandLink action="#{languageController.changeLocale}">
+										<f:setPropertyActionListener value="fr" target="#{languageController.newLocaleCode}" />
+										<h:outputText value="FR" />
+									</h:commandLink>
+								</h:form>
+							</h:panelGroup>
+							<h:panelGroup rendered="#{languageController.locale ne 'en'}">
+								<h:form>
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+									<h:commandLink action="#{languageController.changeLocale}">
+										<f:setPropertyActionListener value="en" target="#{languageController.newLocaleCode}" />
+										<h:outputText value="EN" />
+									</h:commandLink>
+								</h:form>
+							</h:panelGroup>
+						</div>
+						<div>
+							<h:panelGroup rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+								<form name="deconnectForm" method="post" action="#{request.contextPath}/logout">
+									<a href="#" onclick="document.deconnectForm.submit();">#{msg['template.deconnection']}</a>
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								</form>
+							</h:panelGroup>
+							<h:panelGroup rendered="#{not request.isUserInRole('ROLE_ADMIN')}">
+								<h:outputLink value="#{request.contextPath}/login">#{msg['template.connection']}</h:outputLink>
+								(#{msg['template.login-included']})
+							</h:panelGroup>
+						</div>					
+					</div>
+					<p><span class="glyphicon glyphicon-book"></span> #{msg['template.site-main-title']}</p>
+				</div>
+			</header>
+			
+			<h:messages styleClass="bg-info" globalOnly="true" />
+			
+			<div class="container">
+				<div class="row">
+					<nav class="col-sm-12 col-md-4">
+						<p class="nav-title">#{msg['template.main-menu-title']}</p>
+						<ul class="nav nav-pills nav-stacked nav-ul">
+							<li role="presentation">
+								<pretty:link mappingId="index">
+									<h:outputText value="#{msg['template.menu-books']}"/>
+								</pretty:link>
+							</li>
+							<li role="presentation">
+								<pretty:link mappingId="author-list">
+									<h:outputText value="#{msg['template.menu-authors']}"/>
+								</pretty:link>
+								</li>
+							<li role="presentation">
+								<pretty:link mappingId="bookgenre-list">
+									<h:outputText value="#{msg['template.menu-genres']}"/>
+								</pretty:link>
+							</li>
+						</ul>
+						
+						<h:panelGroup rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+							<p class="nav-title">#{msg['template.admin-menu-title']}</p>
+							<ul class="nav nav-pills nav-stacked nav-ul">
+								<li role="presentation">
+									<pretty:link mappingId="book-add">
+										<h:outputText value="#{msg['template.menu-add-book']}"/>
+									</pretty:link>
+								</li>
+								<li role="presentation">
+									<pretty:link mappingId="author-add">
+										<h:outputText value="#{msg['template.menu-add-author']}"/>
+									</pretty:link>
+								</li>
+								<li role="presentation">
+									<pretty:link mappingId="bookgenre-add">
+										<h:outputText value="#{msg['template.menu-add-genre']}"/>
+									</pretty:link>
+								</li>
+							</ul>
+						</h:panelGroup>
+					</nav>
+					<article class="col-sm-12 col-md-8">
+						<header>
+							<h1><ui:insert name="article-title"></ui:insert></h1>
+						</header>
+							<ui:insert name="body">
+							
+							</ui:insert>
+					</article>
+				</div>
+			</div>
+			<footer>#{msg['template.footer']}</footer>
+		</h:body>
+	</f:view>
+</html>

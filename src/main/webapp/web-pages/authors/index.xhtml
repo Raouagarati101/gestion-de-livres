@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pretty="http://ocpsoft.com/prettyfaces">
+	
+	<h:body>
+		<ui:composition template="/web-pages/template/layout-template.xhtml">
+			<f:metadata>
+				<f:event type="preRenderView" listener="#{authorController.initIndexAction}" />
+			</f:metadata>
+			
+			<ui:define name="title">#{msg['author.index.title']}</ui:define>
+			
+			<ui:define name="description">
+				<meta name="description" content="#{msg['author.index.description']}" />
+			</ui:define>
+			
+			<ui:define name="article-title">#{msg['author.index.article-title']}</ui:define>
+			
+			<ui:define name="body">
+				<h:panelGroup rendered="#{authorController.authors.size() > 0}">
+					<h:dataTable value="#{authorController.authors}" var="author" styleClass="table table-striped">
+						<h:column>
+							<f:facet name="header">#{msg['author.index.author']}</f:facet>
+							<pretty:link mappingId="author-view">
+								<f:param value="#{author.id}"/>
+								<h:outputText value="#{author.getFullName()}" />
+							</pretty:link>
+						</h:column>
+						<h:column>
+							<f:facet name="header">#{msg['author.fields.birthdate']}</f:facet>
+							<h:outputText value="#{author.birthdate}">
+								<f:convertDateTime locale="fr_CH" type="date" dateStyle="short" />
+							</h:outputText>
+						</h:column>
+						<h:column rendered="#{request.isUserInRole('ROLE_ADMIN')}">
+							<f:facet name="header">#{msg['author.index.actes']}</f:facet>
+							<pretty:link mappingId="author-edit">
+								<f:param value="#{author.id}" />
+								<span class="glyphicon glyphicon-edit"></span>
+							</pretty:link>
+							
+							<pretty:link mappingId="author-delete">
+								<f:param value="#{author.id}"/>
+								<span class="glyphicon glyphicon-remove"></span>
+							</pretty:link>
+						</h:column>
+					</h:dataTable>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{authorController.authors.size() == 0}">
+					<h:outputText value="#{msg['author.index.no-author']}" />
+				</h:panelGroup>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+	
+</html>

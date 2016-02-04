@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pretty="http://ocpsoft.com/prettyfaces">
+	
+	<h:body>
+		<ui:composition template="/web-pages/template/layout-template.xhtml">
+			<f:metadata>
+				<f:viewParam name="authorId" value="#{authorController.authorId}" />
+				<f:event type="preRenderView" listener="#{authorController.initDeleteAction}" />
+			</f:metadata>
+			
+			<ui:define name="article-title">#{msg['author.delete.article-title']} #{authorController.author.getFullName()}</ui:define>
+			
+			<ui:define name="body">
+				<h:form>
+					<p>#{msg['author.delete.delete-message']}</p>
+					<h:form>
+						<pretty:link mappingId="author-list" styleClass="btn btn-default">
+							<i class="glyphicon glyphicon-chevron-left"></i>
+							<h:outputText value="#{msg['author.delete.back-button']}"/>
+						</pretty:link>
+						<h:outputText value=" " />
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<h:commandButton type="submit" value="#{msg['author.delete.submit-button']}" styleClass="btn btn-danger" onclick="if (! confirm('Voulez-vous vraiment supprimer cet auteur ?')) return false;" action="#{authorController.deleteAuthor}" />
+					</h:form>
+			 	</h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+	
+</html>
