@@ -11,7 +11,7 @@
 
 	<!-- Propriétés -->
 	<properties>
-		<spring.version>4.2.2.RELEASE</spring.version>
+		<spring.version>5.2.5.RELEASE</spring.version>
 		<spring.security.version>4.0.3.RELEASE</spring.security.version>
 		<aspectj.version>1.8.8</aspectj.version>
 		<mysql.connector.version>5.1.36</mysql.connector.version>
